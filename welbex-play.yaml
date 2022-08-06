@@ -1,0 +1,59 @@
+- name: Web-Server
+  hosts: all
+  become: true
+  
+  tasks:
+    
+    - name: Set up repository
+      apt:
+        name:
+          - apt-transport-https
+          - ca-certificates
+          - lsb-release
+          - gnupg
+        state: latest
+        update_cache: true
+
+    - name: Add signing key
+      apt_key:
+        url: https://download.docker.com/linux/ubuntu/gpg
+        state: present
+
+    - name: Add repository into sources list
+      apt_repository:
+        repo: deb https://download.docker.com/linux/ubuntu focal stable
+        state: present
+        filename: docker
+
+    - name: Installing
+      apt:
+        name:
+          - docker-ce
+          - docker-ce-cli
+          - docker-compose-plugin
+          - containerd.io
+        state: latest
+        update_cache: true
+
+    - name: Start service docker
+      service: 
+        name: docker
+        state: started
+
+    - name:
+      apt:
+        name: 
+          - python3-docker
+        state: latest
+        update_cache: true
+
+    - name: Nginx install
+      community.docker.docker_container:
+        name: nginx-web
+        image: nginx
+        state: started
+        ports:
+          - "8000:80"
+        volumes: 
+          -  /home/ubuntu/index:/usr/share/nginx/html
+          -  /home/ubuntu/ngconf/nginx.conf:/etc/nginx/nginx.conf 
