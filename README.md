@@ -19,4 +19,4 @@
 
 ## Схема итоговой инфраструктуры:
 
-https://faint-adasaurus-4bc.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F3b90dfff-afae-436c-86f7-df1f805f2f7c%2FUntitled.png?table=block&id=95e3686b-202d-44a8-bb5c-ff7f4f36d775&spaceId=56b261ac-032c-4a60-9a87-b00f64f920b2&width=2000&userId=&cache=v2
+CLIENT > HTTP/S > AWS LB > HTTP > EC2 
